@@ -1,10 +1,15 @@
 import {Type} from '../models/Type.js';
+import { v4 as uuidv4} from 'uuid'; //Import uuid generator
 
 export const createType=async(req,res)=>{
     try{
         //const {id,name,fields,desc}=req.body;
         const {name,fields,desc}=req.body;
-        const type = await Type.create({name,fields,desc});
+        //generate uuid
+        const id= uuidv4();
+
+        //insertion into types table with generated uuid
+        const type = await Type.create({id,name,fields,desc});
         return res.status(201).json({id: type.id});
     }catch(error){
         console.error('error creating type:',error);
